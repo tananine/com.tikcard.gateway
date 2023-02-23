@@ -1,0 +1,8 @@
+db:
+  redis:
+    emulate: true
+    namespace: EG
+
+plugins:
+  auth:
+    package: './plugins/auth/manifest.js'

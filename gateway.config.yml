@@ -1,0 +1,71 @@
+http:
+  port: 8080
+apiEndpoints:
+  auth:
+    paths: ['/auth/login', '/auth/register']
+  profile:
+    paths: ['/profile', '/profile/*', '/profile/information/*']
+  activation:
+    paths: ['/activation', '/activation/primary/*', '/activation/secondary/*']
+  contact:
+    paths:
+      [
+        '/contact',
+        '/contact/me/app',
+        '/contact/me/list/*',
+        '/contact/me/toggle/*',
+        '/contact/me/sort/*',
+      ]
+serviceEndpoints:
+  authService:
+    url: 'http://docker.for.mac.localhost:3001'
+  profileService:
+    url: 'http://docker.for.mac.localhost:3002'
+policies:
+  - cors
+  - proxy
+  - authen
+pipelines:
+  authPipeline:
+    apiEndpoints:
+      - auth
+    policies:
+      - cors:
+          - action:
+              allowedHeaders: 'Content-Type'
+      - proxy:
+          - action:
+              serviceEndpoint: authService
+  profilePipeline:
+    apiEndpoints:
+      - profile
+    policies:
+      - cors:
+          - action:
+              allowedHeaders: 'Content-Type, Authorization'
+      - authen:
+      - proxy:
+          - action:
+              serviceEndpoint: profileService
+  activationPipeline:
+    apiEndpoints:
+      - activation
+    policies:
+      - cors:
+          - action:
+              allowedHeaders: 'Content-Type, Authorization'
+      - authen:
+      - proxy:
+          - action:
+              serviceEndpoint: profileService
+  contactPipeline:
+    apiEndpoints:
+      - contact
+    policies:
+      - cors:
+          - action:
+              allowedHeaders: 'Content-Type, Authorization'
+      - authen:
+      - proxy:
+          - action:
+              serviceEndpoint: profileService
