@@ -4,7 +4,7 @@ apiEndpoints:
   auth:
     paths: ['/auth/login', '/auth/register']
   profile:
-    paths: ['/profile', '/profile/*', '/profile/information/*']
+    paths: ['/profile', '/profile/*', '/profile/information']
   activation:
     paths: ['/activation', '/activation/primary/*', '/activation/secondary/*']
   contact:
@@ -12,9 +12,9 @@ apiEndpoints:
       [
         '/contact',
         '/contact/me/app',
-        '/contact/me/list/*',
-        '/contact/me/toggle/*',
-        '/contact/me/sort/*',
+        '/contact/me/list',
+        '/contact/me/toggle',
+        '/contact/me/sort',
       ]
 serviceEndpoints:
   authService:
@@ -42,7 +42,7 @@ pipelines:
     policies:
       - cors:
           - action:
-              allowedHeaders: 'Content-Type, Authorization'
+              allowedHeaders: 'Content-Type, Authorization, profile'
       - authen:
       - proxy:
           - action:
@@ -53,7 +53,7 @@ pipelines:
     policies:
       - cors:
           - action:
-              allowedHeaders: 'Content-Type, Authorization'
+              allowedHeaders: 'Content-Type, Authorization, profile'
       - authen:
       - proxy:
           - action:
@@ -64,7 +64,7 @@ pipelines:
     policies:
       - cors:
           - action:
-              allowedHeaders: 'Content-Type, Authorization'
+              allowedHeaders: 'Content-Type, Authorization, profile'
       - authen:
       - proxy:
           - action:
