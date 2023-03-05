@@ -12,6 +12,7 @@ apiEndpoints:
       [
         '/contact',
         '/contact/me/app',
+        '/contact/me/app/*',
         '/contact/me/list',
         '/contact/me/toggle',
         '/contact/me/sort',
