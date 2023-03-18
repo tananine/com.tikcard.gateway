@@ -76,6 +76,10 @@ pipelines:
     apiEndpoints:
       - view
     policies:
+      - cors:
+          - action:
+              allowedHeaders: 'Content-Type, Authorization, profile'
+      - authen:
       - proxy:
           - action:
               serviceEndpoint: profileService
