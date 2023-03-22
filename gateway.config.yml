@@ -19,6 +19,8 @@ apiEndpoints:
       ]
   view:
     paths: '/view/*'
+  share:
+    paths: '/share/link/*'
 serviceEndpoints:
   authService:
     url: 'http://docker.for.mac.localhost:3001'
@@ -80,6 +82,16 @@ pipelines:
           - action:
               allowedHeaders: 'Content-Type, Authorization, profile'
       - authen:
+      - proxy:
+          - action:
+              serviceEndpoint: profileService
+  sharePipeline:
+    apiEndpoints:
+      - share
+    policies:
+      - cors:
+          - action:
+              allowedHeaders: 'Content-Type, Authorization, profile'
       - proxy:
           - action:
               serviceEndpoint: profileService
