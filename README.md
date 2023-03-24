@@ -1,1 +1,1 @@
-# api-gateway
+# com.vickq.gateway
