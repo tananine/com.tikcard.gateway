@@ -1,1 +1,1 @@
-# com.vickq.gateway
+# com.tikcard.gateway
