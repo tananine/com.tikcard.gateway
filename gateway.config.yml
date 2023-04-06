@@ -25,6 +25,8 @@ apiEndpoints:
     paths: ['/share/update', '/share/get']
   getRedirect:
     paths: '/device/scan/*'
+  activate:
+    paths: '/device/activate'
 serviceEndpoints:
   authService:
     url: 'http://docker.for.mac.localhost:3001'
@@ -119,6 +121,17 @@ pipelines:
       - cors:
           - action:
               allowedHeaders: 'Content-Type, Authorization, profile'
+      - proxy:
+          - action:
+              serviceEndpoint: deviceService
+  activatePipeline:
+    apiEndpoints:
+      - activate
+    policies:
+      - cors:
+          - action:
+              allowedHeaders: 'Content-Type, Authorization, profile'
+      - authen:
       - proxy:
           - action:
               serviceEndpoint: deviceService
