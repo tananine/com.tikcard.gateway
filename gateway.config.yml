@@ -2,31 +2,33 @@ http:
   port: ${PORT}
 apiEndpoints:
   auth:
-    paths: ['/auth/login', '/auth/register']
+    paths: ["/auth/login", "/auth/register"]
   profile:
-    paths: ['/profile', '/profile/*', '/profile/information']
+    paths: ["/profile", "/profile/*", "/profile/information"]
   activation:
-    paths: ['/activation', '/activation/primary/*', '/activation/secondary/*']
+    paths: ["/activation", "/activation/primary/*", "/activation/secondary/*"]
   contact:
     paths:
       [
-        '/contact',
-        '/contact/me/app',
-        '/contact/me/app/*',
-        '/contact/me/list',
-        '/contact/me/toggle',
-        '/contact/me/sort',
+        "/contact",
+        "/contact/me/app",
+        "/contact/me/app/*",
+        "/contact/me/list",
+        "/contact/me/toggle",
+        "/contact/me/sort",
       ]
   view:
-    paths: '/view/*'
+    paths: "/view/*"
   use-link:
-    paths: '/share/link/*'
+    paths: "/share/link/*"
   share:
-    paths: ['/share/update', '/share/get']
+    paths: ["/share/update", "/share/get"]
   getRedirect:
-    paths: '/device/scan/*'
+    paths: "/device/scan/*"
   activate:
-    paths: '/device/activate'
+    paths: "/device/activate"
+  getDeviceAll:
+    paths: "/device/get-all"
 serviceEndpoints:
   authService:
     url: http://service.tikcard.auth:3001
@@ -45,7 +47,7 @@ pipelines:
     policies:
       - cors:
           - action:
-              allowedHeaders: 'Content-Type'
+              allowedHeaders: "Content-Type"
       - proxy:
           - action:
               serviceEndpoint: authService
@@ -55,7 +57,7 @@ pipelines:
     policies:
       - cors:
           - action:
-              allowedHeaders: 'Content-Type, Authorization, profile'
+              allowedHeaders: "Content-Type, Authorization, profile"
       - authen:
           - action:
               secretKey: ${SERVICE_PROFILE_SECRET_KEY}
@@ -68,7 +70,7 @@ pipelines:
     policies:
       - cors:
           - action:
-              allowedHeaders: 'Content-Type, Authorization, profile'
+              allowedHeaders: "Content-Type, Authorization, profile"
       - authen:
           - action:
               secretKey: ${SERVICE_PROFILE_SECRET_KEY}
@@ -81,7 +83,7 @@ pipelines:
     policies:
       - cors:
           - action:
-              allowedHeaders: 'Content-Type, Authorization, profile'
+              allowedHeaders: "Content-Type, Authorization, profile"
       - authen:
           - action:
               secretKey: ${SERVICE_PROFILE_SECRET_KEY}
@@ -94,7 +96,7 @@ pipelines:
     policies:
       - cors:
           - action:
-              allowedHeaders: 'Content-Type, Authorization, profile'
+              allowedHeaders: "Content-Type, Authorization, profile"
       - authen:
           - action:
               secretKey: ${SERVICE_PROFILE_SECRET_KEY}
@@ -107,7 +109,7 @@ pipelines:
     policies:
       - cors:
           - action:
-              allowedHeaders: 'Content-Type, Authorization, profile'
+              allowedHeaders: "Content-Type, Authorization, profile"
       - proxy:
           - action:
               serviceEndpoint: profileService
@@ -117,7 +119,7 @@ pipelines:
     policies:
       - cors:
           - action:
-              allowedHeaders: 'Content-Type, Authorization, profile'
+              allowedHeaders: "Content-Type, Authorization, profile"
       - authen:
           - action:
               secretKey: ${SERVICE_PROFILE_SECRET_KEY}
@@ -130,7 +132,7 @@ pipelines:
     policies:
       - cors:
           - action:
-              allowedHeaders: 'Content-Type, Authorization, profile'
+              allowedHeaders: "Content-Type, Authorization, profile"
       - proxy:
           - action:
               serviceEndpoint: deviceService
@@ -140,7 +142,20 @@ pipelines:
     policies:
       - cors:
           - action:
-              allowedHeaders: 'Content-Type, Authorization, profile'
+              allowedHeaders: "Content-Type, Authorization, profile"
+      - authen:
+          - action:
+              secretKey: ${SERVICE_DEVICE_SECRET_KEY}
+      - proxy:
+          - action:
+              serviceEndpoint: deviceService
+  getDeviceAllPipeline:
+    apiEndpoints:
+      - getDeviceAll
+    policies:
+      - cors:
+          - action:
+              allowedHeaders: "Content-Type, Authorization, profile"
       - authen:
           - action:
               secretKey: ${SERVICE_DEVICE_SECRET_KEY}
