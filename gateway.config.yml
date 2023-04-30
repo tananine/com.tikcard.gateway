@@ -29,6 +29,11 @@ apiEndpoints:
     paths: '/device/activate'
   getDeviceAll:
     paths: '/device/get-all'
+  sendContact:
+    paths: '/connection/send-contact'
+  connection:
+    paths:
+      ['/connection/get-all-connect-list', '/connection/delete-connect-list/*']
 serviceEndpoints:
   authService:
     url: http://service.tikcard.auth:3001
@@ -162,3 +167,26 @@ pipelines:
       - proxy:
           - action:
               serviceEndpoint: deviceService
+  sendContactPipeline:
+    apiEndpoints:
+      - sendContact
+    policies:
+      - cors:
+          - action:
+              allowedHeaders: 'Content-Type, Authorization, profile'
+      - proxy:
+          - action:
+              serviceEndpoint: profileService
+  connectionPipeline:
+    apiEndpoints:
+      - connection
+    policies:
+      - cors:
+          - action:
+              allowedHeaders: 'Content-Type, Authorization, profile'
+      - authen:
+          - action:
+              secretKey: ${SERVICE_PROFILE_SECRET_KEY}
+      - proxy:
+          - action:
+              serviceEndpoint: profileService
