@@ -3,6 +3,8 @@ http:
 apiEndpoints:
   auth:
     paths: ['/auth/login', '/auth/register']
+  account:
+    paths: '/account/data'
   profile:
     paths: ['/profile', '/profile/*', '/profile/information']
   activation:
@@ -49,6 +51,16 @@ pipelines:
   authPipeline:
     apiEndpoints:
       - auth
+    policies:
+      - cors:
+          - action:
+              allowedHeaders: 'Content-Type'
+      - proxy:
+          - action:
+              serviceEndpoint: authService
+  accountPipeline:
+    apiEndpoints:
+      - account
     policies:
       - cors:
           - action:
