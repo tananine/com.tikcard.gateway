@@ -64,7 +64,7 @@ pipelines:
     policies:
       - cors:
           - action:
-              allowedHeaders: 'Content-Type'
+              allowedHeaders: 'Content-Type, Authorization'
       - proxy:
           - action:
               serviceEndpoint: authService
