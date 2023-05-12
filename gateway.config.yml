@@ -4,7 +4,7 @@ apiEndpoints:
   auth:
     paths: ['/auth/login', '/auth/register']
   account:
-    paths: '/account/data'
+    paths: ['/account/data', '/account/success-tutorial']
   profile:
     paths: ['/profile', '/profile/*', '/profile/information']
   activation:
